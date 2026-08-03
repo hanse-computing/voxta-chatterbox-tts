@@ -1,22 +1,23 @@
 # RunPod Serverless: Chatterbox-TTS Worker (Ines-Stimme für Voxta)
 
-# Basis: offizielles RunPod-Image mit CUDA 12.4
-FROM runpod/base:0.4.4-cuda12.4.0
+# Basis: offizielles RunPod-Image mit CUDA 12.9
+FROM runpod/base:1.1.0-cuda1290-ubuntu2204
 
-# --- Python 3.13 (chatterbox-tts braucht >=3.10; venv für saubere Deps) ---
+# --- Python (chatterbox-tts braucht >=3.10) ---
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.13 python3.13-venv python3.13-dev ffmpeg libsndfile1 \
+    python3 python3-venv python3-dev python3-pip ffmpeg libsndfile1 \
     && rm -rf /var/lib/apt/lists/*
 
 ENV VENV_PATH=/venv
-RUN python3.13 -m venv $VENV_PATH
+RUN python3 -m venv $VENV_PATH
 ENV PATH="$VENV_PATH/bin:$PATH"
 
 WORKDIR /app
 
 # --- Dependencies ---
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Python-Version prüfen (chatterbox-tts braucht >=3.10)
+RUN python3 --version && pip install --no-cache-dir -r requirements.txt
 
 # --- Handler + VoiceSamples (klein, im Image) ---
 COPY handler.py .
@@ -30,4 +31,4 @@ ENV DEVICE=cuda
 ENV PRELOAD=1
 ENV DEFAULT_VOICE=Voxta_F_Ines.wav
 
-CMD ["python3.13", "-u", "handler.py"]
+CMD ["python3", "-u", "handler.py"]

@@ -1,11 +1,9 @@
 # Chatterbox-TTS Worker Dependencies
-# Versionen abgestimmt auf die ki2000-Installation (chatterbox-tts 0.1.7,
-# Python 3.13, torch 2.9.1+cu128). Auf dem Worker gilt: torch-CUDA-Version
-# muss zum CUDA-Treiber des runpod/base-Images passen.
+# Versionen abgestimmt auf chatterbox-tts 0.1.7 (torch==2.6.0, torchaudio==2.6.0)
 chatterbox-tts==0.1.7
-torch==2.9.1
-torchaudio==2.9.1
-numpy>=2.0.0
+torch==2.6.0
+torchaudio==2.6.0
+numpy>=1.24.0
 librosa==0.11.0
 transformers==5.2.0
 diffusers==0.29.0
