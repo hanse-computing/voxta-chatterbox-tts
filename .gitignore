@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+build-context/
+*.egg-info/
+
+# Testartefakte
+*.wav.test
+test-output/
+
+# Lokale Config (niemals committen!)
+*.local.json
+.env
+
+# Modell (wird von HF geladen, nicht ins Repo)
+models/
+chatterbox-model/
